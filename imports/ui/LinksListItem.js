@@ -36,20 +36,34 @@ export default class LinksListItem extends React.Component {
   render() {
     return (
       <div className="item">
-        <h2>{this.props.url}</h2>
-        <p className="item__message">{this.props.shortUrl}</p>
-        {this.renderStats()}
-        <a className="button button--pill button--link" href={this.props.shortUrl} target="_blank">
-          Visit
-        </a>
-        <button className="button button--pill" ref="copy" data-clipboard-text={this.props.shortUrl}>
-          {this.state.justCopied ? 'Copied' : 'Copy'}
-        </button>
-        <button className="button button--pill" onClick={() => {
-          Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
-        }}>
-          {this.props.visible ? 'Hide' : 'Unhide'}
-        </button>
+        <div className="item__info">
+          <h2>{this.props.url}</h2>
+          <p className="item__message">{this.props.shortUrl}</p>
+          {this.renderStats()}
+          <a className="button button--pill button--link" href={this.props.shortUrl} target="_blank">
+            Visit
+          </a>
+          <button className="button button--pill" ref="copy" data-clipboard-text={this.props.shortUrl}>
+            {this.state.justCopied ? 'Copied' : 'Copy'}
+          </button>
+          <button className="button button--pill" onClick={() => {
+            Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
+          }}>
+            {this.props.visible ? 'Hide' : 'Unhide'}
+          </button>
+          <a className="button button--pill button--link" href={"/qr-png/"+this.props._id} target="_blank">
+            QR PNG
+          </a>
+          <a className="button button--pill button--link" href={"/qr-svg/"+this.props._id} target="_blank">
+            QR SVG
+          </a>
+          <a className="button button--pill button--link" href={"/qr-eps/"+this.props._id} target="_blank">
+            QR EPS
+          </a>
+        </div>
+        <div className="item__qrcode">
+          <img src={"/qr/"+this.props._id} />
+        </div>
       </div>
     );
   }

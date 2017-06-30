@@ -1,12 +1,14 @@
 // Colors
-$brand-primary: #5b4681;
+$brand-primary: #0760c3;
 $grey: #dddddd;
 $light-grey: #f9f9f9;
-$dark-grey: #777777;
+$dark-grey: #555555;
+$black: #000000;
+$white: #ffffff;
 
 // Spacing
 $space: 1.4rem;
-$site-max-width: 50rem;
+$site-max-width: 70rem;
 
 // Font sizes
 $base-font-size: 1.4rem;
@@ -17,7 +19,7 @@ $input-border: $grey;
 $input-spacing: 1rem;
 
 // Boxed view
-$boxed-view-overlay-bg: $grey;
+$boxed-view-overlay-bg: $black;
 $boxed-view-bg: white;
 
 // Button
@@ -34,5 +36,5 @@ $header-color: white;
 
 // item
 $item-bg: $light-grey;
-$item-border: darken($item-bg, 8%);
+$item-border: darken($item-bg, 18%);
 $item-text-color: $dark-grey;

@@ -3,6 +3,8 @@
   border: 1px solid $item-border;
   margin-bottom: $space;
   padding: $space;
+  display:flex;
+  border-radius: 10px 0 10px 0;
 }
 
 .item__message {
@@ -14,4 +16,12 @@
   font-style: italic;
   text-align: center;
   margin: 0;
+}
+
+.item__qrcode {
+
+}
+
+.item__info {
+  flex: 1;
 }
