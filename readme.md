@@ -1,7 +1,7 @@
 # Short Lnk
 
-This is a link shortener built on Meteor and React for my new course.
+This is a link shortener built on Meteor and React. QR codes can be generated for links.
 
-## Authors
+## Based on a Course by
 
 Andrew Mead
