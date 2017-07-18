@@ -19,6 +19,6 @@
     "simpl-schema": "0.0.3"
   },
   "engines": {
-    "node": "6.11.1"
+    "node": "4.8.4"
   }
 }
