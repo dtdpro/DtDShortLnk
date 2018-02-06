@@ -37,8 +37,8 @@ export default class LinksListItem extends React.Component {
     return (
       <div className="item">
         <div className="item__info">
-          <h2>{this.props.url}</h2>
-          <p className="item__message">{this.props.shortUrl}</p>
+          <h2>{this.props.pageTitle ? this.props.pageTitle : this.props.url}</h2>
+          <p className="item__message">{this.props.url}</p>
           {this.renderStats()}
           <a className="button button--pill button--link" href={this.props.shortUrl} target="_blank">
             Visit
@@ -50,6 +50,11 @@ export default class LinksListItem extends React.Component {
             Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
           }}>
             {this.props.visible ? 'Hide' : 'Unhide'}
+          </button>
+          <button className="button button--pill" onClick={() => {
+            Meteor.call('links.delete', this.props._id);
+          }}>
+            Delete
           </button>
           <a className="button button--pill button--link" href={"/qr-png/"+this.props._id} target="_blank">
             QR PNG
@@ -72,6 +77,7 @@ export default class LinksListItem extends React.Component {
 LinksListItem.propTypes = {
   _id: React.PropTypes.string.isRequired,
   url: React.PropTypes.string.isRequired,
+  pageTitle: React.PropTypes.string.isRequired,
   userId: React.PropTypes.string.isRequired,
   visible: React.PropTypes.bool.isRequired,
   shortUrl: React.PropTypes.string.isRequired,

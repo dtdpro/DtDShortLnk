@@ -25,14 +25,30 @@ Meteor.methods({
       }
     }).validate({ url });
 
+    var id = shortid.generate();
+
     Links.insert({
-      _id: shortid.generate(),
+      _id: id,
       url,
       userId: this.userId,
       visible: true,
       visitedCount: 0,
       lastVisitedAt: null
     });
+
+    Meteor.call("getTitle", id);
+
+  },
+  'links.delete'(_id) {
+    new SimpleSchema({
+      _id: {
+        type: String,
+        min: 1
+      }
+    }).validate({ _id });
+
+    Links.remove(_id);
+
   },
   'links.setVisibility'(_id, visible) {
     if (!this.userId) {
@@ -70,6 +86,20 @@ Meteor.methods({
       },
       $inc: {
         visitedCount: 1
+      }
+    })
+  },
+  'links.setTitle'(_id,pageTitle) {
+    new SimpleSchema({
+      _id: {
+        type: String,
+        min: 1
+      }
+    }).validate({ _id });
+
+    Links.update({ _id }, {
+      $set: {
+        pageTitle: pageTitle
       }
     })
   }

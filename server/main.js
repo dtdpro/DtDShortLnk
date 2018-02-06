@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { WebApp } from 'meteor/webapp';
+import {HTTP} from 'meteor/http';
+
 import qr from 'qr-image'
 
 import '../imports/api/users';
@@ -73,6 +75,9 @@ Meteor.startup(() => {
         }
       }
     } else if (link) {
+      if (!link.pageTitle) {
+        Meteor.call('getTitle',_id);
+      }
       res.statusCode = 302;
       res.setHeader('Location', link.url);
       res.end();
@@ -81,4 +86,23 @@ Meteor.startup(() => {
       next();
     }
   });
+});
+
+Meteor.methods({
+  getTitle: function(_id) {
+    const link = Links.findOne({ _id });
+    if (link) {
+      HTTP.call( 'GET', link.url, {npmRequestOptions: {gzip:true}}, function( error, result ) {
+          if ( !error ) {
+            //console.log( response );
+            var content =  result.content;
+            var start = content.toLowerCase().indexOf('<title>');
+            var end = content.toLowerCase().indexOf('</title>');
+            var page_title = content.substring(start + '<title>'.length, end);
+            console.log(page_title);
+            Meteor.call('links.setTitle', _id, page_title);
+          }
+      });
+    }
+  }
 });

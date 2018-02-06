@@ -6,13 +6,15 @@ export default class LinksListFilters extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showVisible: true
+      showVisible: true,
+      searchString: ""
     };
   }
   componentDidMount() {
     this.tracker = Tracker.autorun(() => {
       this.setState({
-        showVisible: Session.get('showVisible')
+        showVisible: Session.get('showVisible'),
+        searchString: Session.get('searchString')
       })
     });
   }
@@ -22,6 +24,9 @@ export default class LinksListFilters extends React.Component {
   render() {
     return (
       <div>
+        <input className="searchbox" type="text" placeholder="Search" checked={!this.state.searchString} onChange={(e) => {
+          Session.set('searchString', e.target.value);
+        }}/>
         <label className="checkbox">
           <input className="checkbox__box" type="checkbox" checked={!this.state.showVisible} onChange={(e) => {
             Session.set('showVisible', !e.target.checked);

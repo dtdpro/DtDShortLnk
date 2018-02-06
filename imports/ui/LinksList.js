@@ -18,9 +18,13 @@ export default class LinksList extends React.Component {
     console.log('componentDidMount LinksList');
     this.linksTracker = Tracker.autorun(() => {
       Meteor.subscribe('links');
-      const links = Links.find({
-        visible: Session.get('showVisible')
-      }).fetch();
+      let query = {visible: Session.get('showVisible')};
+      let search = Session.get('searchString');
+      let regex = new RegExp( search, 'i' );
+      if (search) {
+        query = {$and: [{visible: Session.get('showVisible')},{url:regex}]};
+      }
+      const links = Links.find(query).fetch();
       this.setState({ links });
     });
   }

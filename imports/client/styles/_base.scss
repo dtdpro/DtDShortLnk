@@ -33,6 +33,7 @@ a {
 
 input[type=text], input[type=email], input[type=password] {
   border: 1px solid $input-border;
+  border-radius: 10px 0 10px 0;
   font-size: $base-font-size;
   margin-bottom: $space;
   padding: $input-spacing;
