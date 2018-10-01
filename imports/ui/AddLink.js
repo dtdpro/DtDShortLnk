@@ -1,66 +1,69 @@
 import React from 'react';
-import Modal from 'react-modal';
-import { Meteor } from 'meteor/meteor';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {Meteor} from 'meteor/meteor';
 
 export default class AddLink extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      url: '',
-      isOpen: false,
-      error: ''
-    };
-  }
-  onSubmit(e) {
-    const { url } = this.state;
+    constructor(props) {
+        super(props);
+        this.state = {
+            modal: false,
+            url: ''
+        };
 
-    e.preventDefault();
+        this.toggle = this.toggle.bind(this);
+    }
 
-    Meteor.call('links.insert', url, (err, res) => {
-      if (!err) {
-        this.handleModalClose();
-      } else {
-        this.setState({ error: err.reason });
-      }
-    });
-  }
-  onChange(e) {
-    this.setState({
-      url: e.target.value
-    });
-  }
-  handleModalClose() {
-    this.setState({
-      isOpen: false,
-      url: '',
-      error: ''
-    });
-  }
-  render() {
-    return (
-      <div>
-        <button className="button" onClick={() => this.setState({isOpen: true})}>+ Add Link</button>
-        <Modal
-          isOpen={this.state.isOpen}
-          contentLabel="Add link"
-          onAfterOpen={() => this.refs.url.focus()}
-          onRequestClose={this.handleModalClose.bind(this)}
-          className="boxed-view__box"
-          overlayClassName="boxed-view boxed-view--modal">
-          <h1>Add Link</h1>
-          {this.state.error ? <p>{this.state.error}</p> : undefined}
-          <form onSubmit={this.onSubmit.bind(this)} className="boxed-view__form">
-              <input
-                type="text"
-                placeholder="URL"
-                ref="url"
-                value={this.state.url}
-                onChange={this.onChange.bind(this)}/>
-              <button className="button">Add Link</button>
-              <button type="button" className="button button--secondary" onClick={this.handleModalClose.bind(this)}>Cancel</button>
-          </form>
-        </Modal>
-      </div>
-    );
-  }
+    onSubmit(e) {
+        const {url} = this.state;
+
+        e.preventDefault();
+
+        Meteor.call('links.insert', url, (err, res) => {
+            if (!err) {
+                this.toggle();
+            } else {
+                this.setState({error: err.reason});
+            }
+        });
+    }
+
+    onChange(e) {
+        this.setState({
+            url: e.target.value
+        });
+    }
+
+    toggle() {
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
+
+    render() {
+        return (
+            <div className="col-6 text-right">
+                <Button color="success" onClick={this.toggle}>+ Add LInk</Button>
+                <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <form onSubmit={this.onSubmit.bind(this)} className="">
+                    <ModalHeader toggle={this.toggle}>Add Link</ModalHeader>
+                    <ModalBody>
+                        {this.state.error ? <p>{this.state.error}</p> : undefined}
+                        <div className="form-group mb-2">
+                            <input
+                                type="text"
+                                placeholder="URL"
+                                ref="url"
+                                className="form-control-plaintext"
+                                value={this.state.url}
+                                onChange={this.onChange.bind(this)}/>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className="btn btn-primary">Add Link</button>
+                    </ModalFooter>
+                    </form>
+                </Modal>
+            </div>
+        );
+    }
 }

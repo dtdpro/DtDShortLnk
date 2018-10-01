@@ -9,10 +9,12 @@ import LinksListFilters from './LinksListFilters';
 export default () => {
   return (
     <div className="wrapper">
-      <PrivateHeader title="Your Links"/>
-      <div className="page-content">
+      <PrivateHeader title="DtD Short Lnk"/>
+      <div className="page-content container">
+          <div className="mb-3 row">
         <LinksListFilters/>
         <AddLink/>
+          </div>
         <LinksList/>
       </div>
       <PrivateFooter/>

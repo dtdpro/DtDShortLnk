@@ -72,7 +72,7 @@ Meteor.methods({
       $set: { visible }
     });
   },
-  'links.trackVisit'(_id) {
+  'links.trackVisit'(_id,ipAddress,userAgent) {
     new SimpleSchema({
       _id: {
         type: String,
@@ -87,7 +87,7 @@ Meteor.methods({
       $inc: {
         visitedCount: 1
       }
-    })
+    });
   },
   'links.setTitle'(_id,pageTitle) {
     new SimpleSchema({

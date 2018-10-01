@@ -6,6 +6,7 @@ import qr from 'qr-image'
 
 import '../imports/api/users';
 import { Links } from '../imports/api/links';
+import { Tracking } from '../imports/api/tracking';
 import '../imports/startup/simple-schema-configuration.js';
 
 Meteor.startup(() => {
@@ -14,9 +15,6 @@ Meteor.startup(() => {
     const _id = url.pop();
     const link = Links.findOne({ _id });
     const shortUrl = Meteor.absoluteUrl(_id);
-
-    console.log(req.url.split("/"));
-    console.log(_id);
 
     if (url[1] == "qr" || url[1] == "qr-png") {
       if (link) {
@@ -81,7 +79,8 @@ Meteor.startup(() => {
       res.statusCode = 302;
       res.setHeader('Location', link.url);
       res.end();
-      Meteor.call('links.trackVisit', _id);
+      Meteor.call('links.trackVisit', _id,req.headers['x-forwarded-for'],req.headers['user-agent']);
+      Meteor.call("tracking.insert",link,req.headers['x-forwarded-for'],req.headers['user-agent']);
     } else {
       next();
     }

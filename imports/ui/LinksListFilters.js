@@ -23,7 +23,7 @@ export default class LinksListFilters extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="col-6">
         <input className="searchbox" type="text" placeholder="Search" checked={!this.state.searchString} onChange={(e) => {
           Session.set('searchString', e.target.value);
         }}/>

@@ -1,86 +1,97 @@
-import { Meteor } from 'meteor/meteor';
+import {Meteor} from 'meteor/meteor';
 import React from 'react';
 import Clipboard from 'clipboard';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 export default class LinksListItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      justCopied: false
-    };
-  }
-  componentDidMount() {
-    this.clipboard = new Clipboard(this.refs.copy);
-
-    this.clipboard.on('success', () => {
-      this.setState({ justCopied: true });
-      setTimeout(() => this.setState({ justCopied: false }), 1000);
-    }).on('error', () => {
-      alert('Unable to copy. Please manually copy the link.');
-    })
-  }
-  componentWillUnmount() {
-    this.clipboard.destroy();
-  }
-  renderStats() {
-    const visitMessage = this.props.visitedCount === 1 ? 'visit' : 'visits';
-    let visitedMessage = null;
-
-    if (typeof this.props.lastVisitedAt === 'number') {
-      visitedMessage = `(visited ${ moment(this.props.lastVisitedAt).fromNow() })`;
+    constructor(props) {
+        super(props);
+        this.state = {
+            justCopied: false
+        };
     }
 
-    return <p className="item__message">{this.props.visitedCount} {visitMessage} {visitedMessage}</p>;
-  }
-  render() {
-    return (
-      <div className="item">
-        <div className="item__info">
-          <h2>{this.props.pageTitle ? this.props.pageTitle : this.props.url}</h2>
-          <p className="item__message">{this.props.url}</p>
-          {this.renderStats()}
-          <a className="button button--pill button--link" href={this.props.shortUrl} target="_blank">
-            Visit
-          </a>
-          <button className="button button--pill" ref="copy" data-clipboard-text={this.props.shortUrl}>
-            {this.state.justCopied ? 'Copied' : 'Copy'}
-          </button>
-          <button className="button button--pill" onClick={() => {
-            Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
-          }}>
-            {this.props.visible ? 'Hide' : 'Unhide'}
-          </button>
-          <button className="button button--pill" onClick={() => {
-            Meteor.call('links.delete', this.props._id);
-          }}>
-            Delete
-          </button>
-          <a className="button button--pill button--link" href={"/qr-png/"+this.props._id} target="_blank">
-            QR PNG
-          </a>
-          <a className="button button--pill button--link" href={"/qr-svg/"+this.props._id} target="_blank">
-            QR SVG
-          </a>
-          <a className="button button--pill button--link" href={"/qr-eps/"+this.props._id} target="_blank">
-            QR EPS
-          </a>
-        </div>
-        <div className="item__qrcode">
-          <img src={"/qr/"+this.props._id} />
-        </div>
-      </div>
-    );
-  }
+    componentDidMount() {
+        this.clipboard = new Clipboard(this.refs.copy);
+
+        this.clipboard.on('success', () => {
+            this.setState({justCopied: true});
+            setTimeout(() => this.setState({justCopied: false}), 1000);
+        }).on('error', () => {
+            alert('Unable to copy. Please manually copy the link.');
+        })
+    }
+
+    componentWillUnmount() {
+        this.clipboard.destroy();
+    }
+
+    renderStats() {
+        const visitMessage = this.props.visitedCount === 1 ? 'visit' : 'visits';
+        let visitedMessage = null;
+
+        if (typeof this.props.lastVisitedAt === 'number') {
+            visitedMessage = `(visited ${ moment(this.props.lastVisitedAt).fromNow() })`;
+        }
+
+        return <p className="small">{this.props.visitedCount} {visitMessage} {visitedMessage}</p>;
+    }
+
+    render() {
+        return (
+            <div className="col-12">
+                <div className="card mb-2">
+                    <div className="card-body">
+                        <img src={"/qr/" + this.props._id} className="float-right"/>
+                        <h5 className="card-title">{this.props.pageTitle ? this.props.pageTitle : this.props.url}</h5>
+                        <h6 className="card-subtitle mb-2 text-muted">{this.props.url}</h6>
+                        {this.renderStats()}
+                        <div className="btn-group" role="group">
+                            <a className="btn btn-sm btn-primary" href={this.props.shortUrl} target="_blank">
+                                Visit
+                            </a>
+                            <a className="btn btn-sm btn-info" href={"/qr-png/" + this.props._id}
+                               target="_blank">
+                                QR PNG
+                            </a>
+                            <a className="btn btn-sm btn-info" href={"/qr-svg/" + this.props._id}
+                               target="_blank">
+                                QR SVG
+                            </a>
+                            <a className="btn btn-sm btn-info" href={"/qr-eps/" + this.props._id}
+                               target="_blank">
+                                QR EPS
+                            </a>
+                            <button className="btn btn-sm" ref="copy" data-clipboard-text={this.props.shortUrl}>
+                                {this.state.justCopied ? 'Copied' : 'Copy'}
+                            </button>
+                            <button className="btn btn-sm" onClick={() => {
+                                Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
+                            }}>
+                                {this.props.visible ? 'Hide' : 'Unhide'}
+                            </button>
+                            <button className="btn btn-sm" onClick={() => {
+                                Meteor.call('links.delete', this.props._id);
+                            }}>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 };
 
 LinksListItem.propTypes = {
-  _id: React.PropTypes.string.isRequired,
-  url: React.PropTypes.string.isRequired,
-  pageTitle: React.PropTypes.string.isRequired,
-  userId: React.PropTypes.string.isRequired,
-  visible: React.PropTypes.bool.isRequired,
-  shortUrl: React.PropTypes.string.isRequired,
-  visitedCount: React.PropTypes.number.isRequired,
-  lastVisitedAt: React.PropTypes.number
+    _id: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    pageTitle: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+    visible: PropTypes.bool.isRequired,
+    shortUrl: PropTypes.string.isRequired,
+    visitedCount: PropTypes.number.isRequired,
+    lastVisitedAt: PropTypes.number
 };
+
