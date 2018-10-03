@@ -10,6 +10,7 @@ import TrackingListItem from './TrackingListItem';
 export default class TrackingList extends React.Component {
     constructor(props) {
         super(props);
+        console.log(this.props.linkid);
         this.state = {
             tracking: []
         };
@@ -19,7 +20,12 @@ export default class TrackingList extends React.Component {
         console.log('componentDidMount TrackingList');
         this.linksTracker = Tracker.autorun(() => {
             Meteor.subscribe('link_tracking');
-            const tracking = Tracking.find().fetch();
+            var tracking = null;
+            if (this.props.linkid) {
+                tracking = Tracking.find({linkId:this.props.linkid}).fetch();
+            } else {
+                tracking = Tracking.find().fetch();
+            }
             this.setState({tracking});
         });
     }
@@ -30,9 +36,13 @@ export default class TrackingList extends React.Component {
     }
 
     renderLinksListItems() {
-        return this.state.tracking.map((tracked) => {
-            return <TrackingListItem key={tracked._id} {...tracked}/>;
-        });
+        if (this.state.tracking.length) {
+            return this.state.tracking.map((tracked) => {
+                return <TrackingListItem key={tracked._id} {...tracked}/>;
+            });
+        } else {
+            return <tr className="bg-warning"><td colSpan="4">No tracking data</td></tr>
+        }
     }
 
     render() {

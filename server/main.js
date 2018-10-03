@@ -1,3 +1,9 @@
+/*
+DtD Short Lnk
+(c)2017-2018 DTD Prductions
+Based upon https://github.com/andrewjmead/short-lnk-meteor-course by Andrew J. Mead
+ */
+
 import { Meteor } from 'meteor/meteor';
 import { WebApp } from 'meteor/webapp';
 import {HTTP} from 'meteor/http';
@@ -72,7 +78,7 @@ Meteor.startup(() => {
             res.end('<h1>414 Request-URI Too Large</h1>');
         }
       }
-    } else if (link) {
+    } else if (link && url[1] != 'tracking') {
       if (!link.pageTitle) {
         Meteor.call('getTitle',_id);
       }

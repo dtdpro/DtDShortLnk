@@ -4,7 +4,7 @@ import TrackingList from './TrackingList';
 import PrivateHeader from './PrivateHeader';
 import PrivateFooter from './PrivateFooter';
 
-export default () => {
+export default (match) => {
     return (
         <div className="wrapper">
             <PrivateHeader title="DtD Short Lnk: Tracking"/>
@@ -13,7 +13,7 @@ export default () => {
                     <thead>
                     <tr><th>Link</th><th>Visited</th><th>IP</th><th>User Agent</th></tr>
                     </thead>
-                    <TrackingList/>
+                    <TrackingList linkid={match.params.linkid}/>
                 </table>
             </div>
             <PrivateFooter/>

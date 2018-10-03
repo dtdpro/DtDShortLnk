@@ -41,7 +41,7 @@ export default class LinksListItem extends React.Component {
     render() {
         return (
             <div className="col-12">
-                <div className="card mb-2">
+                <div className="card mb-2 bg-light">
                     <div className="card-body">
                         <img src={"/qr/" + this.props._id} className="float-right"/>
                         <h5 className="card-title">{this.props.pageTitle ? this.props.pageTitle : this.props.url}</h5>
@@ -50,6 +50,9 @@ export default class LinksListItem extends React.Component {
                         <div className="btn-group" role="group">
                             <a className="btn btn-sm btn-primary" href={this.props.shortUrl} target="_blank">
                                 Visit
+                            </a>
+                            <a className="btn btn-sm btn-primary" href={"/tracking/"+this.props._id}>
+                                Tracking
                             </a>
                             <a className="btn btn-sm btn-info" href={"/qr-png/" + this.props._id}
                                target="_blank">
@@ -63,15 +66,15 @@ export default class LinksListItem extends React.Component {
                                target="_blank">
                                 QR EPS
                             </a>
-                            <button className="btn btn-sm" ref="copy" data-clipboard-text={this.props.shortUrl}>
+                            <button className="btn btn-sm btn-secondary" ref="copy" data-clipboard-text={this.props.shortUrl}>
                                 {this.state.justCopied ? 'Copied' : 'Copy'}
                             </button>
-                            <button className="btn btn-sm" onClick={() => {
+                            <button className="btn btn-sm btn-secondary" onClick={() => {
                                 Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
                             }}>
                                 {this.props.visible ? 'Hide' : 'Unhide'}
                             </button>
-                            <button className="btn btn-sm" onClick={() => {
+                            <button className="btn btn-sm btn-danger" onClick={() => {
                                 Meteor.call('links.delete', this.props._id);
                             }}>
                                 Delete
