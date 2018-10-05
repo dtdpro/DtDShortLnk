@@ -39,6 +39,14 @@ export default class LinksListItem extends React.Component {
     }
 
     render() {
+        /*
+
+                            <button className="btn btn-sm btn-danger" onClick={() => {
+                                Meteor.call('links.delete', this.props._id);
+                            }}>
+                                Delete
+                            </button>
+         */
         return (
             <div className="col-12">
                 <div className="card mb-2 bg-light">
@@ -66,18 +74,13 @@ export default class LinksListItem extends React.Component {
                                target="_blank">
                                 QR EPS
                             </a>
-                            <button className="btn btn-sm btn-secondary" ref="copy" data-clipboard-text={this.props.shortUrl}>
+                            <button className="btn btn-sm btn-success" ref="copy" data-clipboard-text={this.props.shortUrl}>
                                 {this.state.justCopied ? 'Copied' : 'Copy'}
                             </button>
-                            <button className="btn btn-sm btn-secondary" onClick={() => {
+                            <button className="btn btn-sm btn-warning" onClick={() => {
                                 Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
                             }}>
                                 {this.props.visible ? 'Hide' : 'Unhide'}
-                            </button>
-                            <button className="btn btn-sm btn-danger" onClick={() => {
-                                Meteor.call('links.delete', this.props._id);
-                            }}>
-                                Delete
                             </button>
                         </div>
                     </div>

@@ -1,54 +1,57 @@
 import React from 'react';
-import { Link } from 'react-router';
-import { Accounts } from 'meteor/accounts-base';
+import {Link} from 'react-router';
+import {Accounts} from 'meteor/accounts-base';
 
 export default class Signup extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: ''
-    };
-  }
-  onSubmit(e) {
-    e.preventDefault();
-
-    let email = this.refs.email.value.trim();
-    let password = this.refs.password.value.trim();
-    let first_name = this.refs.first_name.value.trim();
-    let last_name = this.refs.last_name.value.trim();
-    let profile = {first_name,last_name};
-
-    if (password.length < 9) {
-      return this.setState({error: 'Password must be more than 8 characters long'});
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: ''
+        };
     }
 
-    Accounts.createUser({ email, password, profile}, (err) => {
-      if (err) {
-        this.setState({error: err.reason});
-      } else {
-        this.setState({error: ''});
-      }
-    });
-  }
-  render() {
-    return (
-      <div className="boxed-view">
-        <div className="boxed-view__box">
-          <h1>Join Short Lnk</h1>
+    onSubmit(e) {
+        e.preventDefault();
 
-          {this.state.error ? <p>{this.state.error}</p> : undefined}
+        let email = this.refs.email.value.trim();
+        let password = this.refs.password.value.trim();
+        let first_name = this.refs.first_name.value.trim();
+        let last_name = this.refs.last_name.value.trim();
+        let profile = {first_name, last_name};
 
-          <form onSubmit={this.onSubmit.bind(this)} noValidate className="boxed-view__form">
-            <input type="text" ref="first_name" name="first_name" placeholder="First Name"/>
-            <input type="text" ref="last_name" name="last_name" placeholder="Last Name"/>
-            <input type="email" ref="email" name="email" placeholder="Email"/>
-            <input type="password" ref="password" name="password" placeholder="Password"/>
-            <button className="button">Create Account</button>
-          </form>
+        if (password.length < 9) {
+            return this.setState({error: 'Password must be more than 8 characters long'});
+        }
+        /*
+        Accounts.createUser({ email, password, profile}, (err) => {
+          if (err) {
+            this.setState({error: err.reason});
+          } else {
+            this.setState({error: ''});
+          }
+        });
+        */
+    }
 
-          <Link to="/">Have an account?</Link>
-        </div>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="boxed-view">
+                <div className="boxed-view__box">
+                    <h1>Join Short Lnk</h1>
+
+                    {this.state.error ? <p>{this.state.error}</p> : undefined}
+
+                    <form onSubmit={this.onSubmit.bind(this)} noValidate className="boxed-view__form">
+                        <input type="text" ref="first_name" name="first_name" placeholder="First Name"/>
+                        <input type="text" ref="last_name" name="last_name" placeholder="Last Name"/>
+                        <input type="email" ref="email" name="email" placeholder="Email"/>
+                        <input type="password" ref="password" name="password" placeholder="Password"/>
+                        <button className="button">Create Account</button>
+                    </form>
+
+                    <Link to="/">Have an account?</Link>
+                </div>
+            </div>
+        );
+    }
 }

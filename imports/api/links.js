@@ -7,7 +7,7 @@ export const Links = new Mongo.Collection('links');
 
 if (Meteor.isServer) {
   Meteor.publish('links', function () {
-    return Links.find({ userId: this.userId });
+    return Links.find();//{ userId: this.userId }
   });
 }
 
@@ -39,7 +39,7 @@ Meteor.methods({
     Meteor.call("getTitle", id);
 
   },
-  'links.delete'(_id) {
+  /*'links.delete'(_id) {
     new SimpleSchema({
       _id: {
         type: String,
@@ -49,7 +49,7 @@ Meteor.methods({
 
     Links.remove(_id);
 
-  },
+  },*/
   'links.setVisibility'(_id, visible) {
     if (!this.userId) {
       throw new Meteor.Error('not-authorized');

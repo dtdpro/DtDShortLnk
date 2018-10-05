@@ -26,6 +26,7 @@ export default class Login extends React.Component {
     }
 
     render() {
+        /*<p className="mt-2 mb-3 text-muted"><Link to="/signup">Need an account?</Link><br/>&copy; 2017-2018</p>*/
         return (
             <form onSubmit={this.onSubmit.bind(this)} noValidate className="form-signin">
 
@@ -37,8 +38,7 @@ export default class Login extends React.Component {
                 <input type="password" ref="password" name="password" placeholder="Password" className="form-control"
                        required/>
 
-                <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                <p className="mt-2 mb-3 text-muted"><Link to="/signup">Need an account?</Link><br/>&copy; 2017-2018</p>
+                <button className="btn btn-primary btn-block" type="submit">Sign in</button>
             </form>
 
         );
