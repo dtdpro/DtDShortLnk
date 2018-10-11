@@ -30,12 +30,23 @@ export default class LinksListItem extends React.Component {
     renderStats() {
         const visitMessage = this.props.visitedCount === 1 ? 'visit' : 'visits';
         let visitedMessage = null;
+        let createdDate = null;
 
         if (typeof this.props.lastVisitedAt === 'number') {
             visitedMessage = `(visited ${ moment(this.props.lastVisitedAt).fromNow() })`;
         }
 
-        return <p className="small">{this.props.visitedCount} {visitMessage} {visitedMessage}</p>;
+        if (this.props.createdAt) {
+            createdDate = `${ moment(this.props.createdAt).format("YYYY-MM-DD HH:mm") }`;
+        } else {
+            createdDate = "N/A";
+        }
+
+        return (
+            <p className="small">
+                {this.props.visitedCount} {visitMessage} {visitedMessage} | {this.props.shortUrl} | Created: {createdDate}
+            </p>
+        );
     }
 
     render() {

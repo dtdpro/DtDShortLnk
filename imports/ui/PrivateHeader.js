@@ -38,7 +38,7 @@ export default class PrivateHeader extends React.Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+            <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-3">
                 <div className="container">
                     <a className="navbar-brand" href="#">{this.props.title}</a>
                     <ul className="navbar-nav mr-auto">
@@ -46,7 +46,7 @@ export default class PrivateHeader extends React.Component {
                             <a className="nav-link" href="/links">Links</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/tracking">Tracking</a>
+                            <a className="nav-link" href="/tracking">Link Tracking</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#" onClick={() => Accounts.logout()}>Logout ({this.renderUserInfo()})</a>

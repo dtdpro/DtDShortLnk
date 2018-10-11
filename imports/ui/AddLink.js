@@ -53,7 +53,7 @@ export default class AddLink extends React.Component {
                                 type="text"
                                 placeholder="URL"
                                 ref="url"
-                                className="form-control-plaintext"
+                                className="form-control"
                                 value={this.state.url}
                                 onChange={this.onChange.bind(this)}/>
                         </div>
