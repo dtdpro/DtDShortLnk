@@ -31,6 +31,7 @@ export default class Login extends React.Component {
             <form onSubmit={this.onSubmit.bind(this)} noValidate className="form-signin">
 
                 <h1 className="h3 mb-3 font-weight-normal">DtD Short Lnk</h1>
+                {this.state.error ? <p>{this.state.error}</p> : undefined}
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
                 <input type="email" ref="email" name="email" placeholder="Email" className="form-control" required
                        autoFocus/>
@@ -40,7 +41,6 @@ export default class Login extends React.Component {
 
                 <button className="btn btn-primary btn-block" type="submit">Sign in</button>
             </form>
-
         );
     }
 }

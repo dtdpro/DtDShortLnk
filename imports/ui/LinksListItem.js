@@ -104,8 +104,6 @@ export default class LinksListItem extends React.Component {
 LinksListItem.propTypes = {
     _id: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    pageTitle: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired,
     visible: PropTypes.bool.isRequired,
     shortUrl: PropTypes.string.isRequired,
     visitedCount: PropTypes.number.isRequired,

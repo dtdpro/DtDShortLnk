@@ -12,10 +12,11 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'links.insert'(url) {
+    'links.insert'(url,domain) {
         if (!this.userId) {
             throw new Meteor.Error('not-authorized');
         }
+
 
         new SimpleSchema({
             url: {
@@ -30,6 +31,7 @@ Meteor.methods({
         Links.insert({
             _id: id,
             url,
+            domain,
             userId: this.userId,
             visible: true,
             visitedCount: 0,

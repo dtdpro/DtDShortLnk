@@ -41,7 +41,12 @@ export default class LinksList extends React.Component {
     }
 
     return this.state.links.map((link) => {
-      const shortUrl = Meteor.absoluteUrl(link._id);
+      var shortUrl = "";
+      if (link.domain) {
+        shortUrl = "https://" + link.domain + "/" + link._id;
+      } else {
+        shortUrl = Meteor.absoluteUrl(link._id);
+      }
       return <LinksListItem key={link._id} shortUrl={shortUrl} {...link}/>;
     });
   }

@@ -39,7 +39,7 @@ export default class LinksListFilters extends React.Component {
                                onChange={(e) => {
                                    Session.set('showVisible', !e.target.checked);
                                }}/>
-                        <label className="form-check-label" for="show-visible">Show hidden links</label>
+                        <label className="form-check-label" htmlFor="show-visible">Show hidden links</label>
                     </div>
                 </div>
             </div>
